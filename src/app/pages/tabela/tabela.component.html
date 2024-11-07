@@ -2,10 +2,16 @@
   <mat-card>
     <mat-card-content>
       <div class="row">
-        <mat-checkbox value="comprado" (change)="alternar($event.checked, $event.source.value)">Apenas
-          selecionados</mat-checkbox>
-        <mat-checkbox value="essencial" (change)="alternar($event.checked, $event.source.value)">Apenas
-          essenciais</mat-checkbox>
+        <mat-checkbox
+          value="comprado"
+          (change)="alternar($event.checked, $event.source.value)"
+          >Apenas selecionados</mat-checkbox
+        >
+        <mat-checkbox
+          value="essencial"
+          (change)="alternar($event.checked, $event.source.value)"
+          >Apenas essenciais</mat-checkbox
+        >
       </div>
     </mat-card-content>
   </mat-card>
@@ -14,25 +20,34 @@
   <table cdk-table [dataSource]="dataSource" class="container p-0">
     <!-- Position Column -->
     <ng-container [cdkColumnDef]="colunas[0]">
-      <th cdk-header-cell *cdkHeaderCellDef style="width: 40px"></th>
+      <th cdk-header-cell *cdkHeaderCellDef style="width: 40px">
+        <mat-checkbox
+          (change)="comprarTudoOuNao($event.checked)"
+        ></mat-checkbox>
+      </th>
       <td cdk-cell *cdkCellDef="let element">
-        <mat-checkbox [checked]="element.comprado" (change)="alternarComprado($event.checked, element)"></mat-checkbox>
+        <mat-checkbox
+          [checked]="element.comprado"
+          (change)="alternarComprado($event.checked, element)"
+        ></mat-checkbox>
       </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container [cdkColumnDef]="colunas[1]">
-      <th cdk-header-cell *cdkHeaderCellDef> Nome </th>
-      <td cdk-cell *cdkCellDef="let element"> {{element.name}} </td>
+      <th cdk-header-cell *cdkHeaderCellDef>Nome</th>
+      <td cdk-cell *cdkCellDef="let element">{{ element.name }}</td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container [cdkColumnDef]="colunas[2]">
-      <th cdk-header-cell *cdkHeaderCellDef> Essencial </th>
-      <td cdk-cell *cdkCellDef="let element"> {{element.essencial ? 'sim' : 'não'}} </td>
+      <th cdk-header-cell *cdkHeaderCellDef>Essencial</th>
+      <td cdk-cell *cdkCellDef="let element">
+        {{ element.essencial ? "sim" : "não" }}
+      </td>
     </ng-container>
 
     <tr cdk-header-row *cdkHeaderRowDef="colunas"></tr>
-    <tr cdk-row *cdkRowDef="let row; columns: colunas;"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: colunas"></tr>
   </table>
 </div>

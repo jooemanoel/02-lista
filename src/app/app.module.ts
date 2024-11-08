@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { TabelaComponent } from './pages/tabela/tabela.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatRadioModule,
     MatCheckboxModule,
     MatCardModule,
-    CdkTableModule
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

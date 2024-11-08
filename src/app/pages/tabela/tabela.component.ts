@@ -32,7 +32,7 @@ export class TabelaComponent {
   alternarComprado(checked: boolean, element: Item) {
     element.comprado = checked;
   }
-  comprarTudoOuNao(checked: boolean) {
+  alternarTudo(checked: boolean) {
     this.listaItens.forEach((item) => {
       this.alternarComprado(checked, item);
     });

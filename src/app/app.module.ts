@@ -12,14 +12,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { TabelaComponent } from './pages/tabela/tabela.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
-import { CdkTableModule } from '@angular/cdk/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { CheckboxFiltroComponent } from './components/checkbox-filtro/checkbox-filtro.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
     AppComponent,
     TabelaComponent,
-    CabecalhoComponent
+    CabecalhoComponent,
+    CheckboxFiltroComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import { MatTableModule } from '@angular/material/table';
     MatRadioModule,
     MatCheckboxModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,42 +1,27 @@
 <div class="container pt-3">
-  <mat-card>
-    <mat-card-content>
-      <div class="row">
-        <mat-checkbox value="comprado" (change)="alternar($event.checked, $event.source.value)">Apenas
-          selecionados</mat-checkbox>
-        <mat-checkbox value="essencial" (change)="alternar($event.checked, $event.source.value)">Apenas
-          essenciais</mat-checkbox>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-<div class="container pt-3">
-  <table mat-table [dataSource]="dataSource">
-    <!-- Position Column -->
+  <table mat-table [dataSource]="dataSource" matSort>
     <ng-container [matColumnDef]="colunas[0]">
       <th mat-header-cell *matHeaderCellDef style="width: 40px">
         <mat-checkbox (change)="alternarTudo($event.checked)"></mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let element">
-        <mat-checkbox [checked]="element.comprado" (change)="alternarComprado($event.checked, element)"></mat-checkbox>
+        <mat-checkbox [checked]="element.comprado" (change)="alternarComprado($event.checked, element)">
+        </mat-checkbox>
       </td>
     </ng-container>
-
-    <!-- Name Column -->
     <ng-container [matColumnDef]="colunas[1]">
-      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
       <td mat-cell *matCellDef="let element">{{ element.name }}</td>
     </ng-container>
-
-    <!-- Weight Column -->
     <ng-container [matColumnDef]="colunas[2]">
-      <th mat-header-cell *matHeaderCellDef>Essencial</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Essencial</th>
       <td mat-cell *matCellDef="let element">
         {{ element.essencial ? "sim" : "não" }}
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="colunas"></tr>
     <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="10" aria-label="Select page of users">
+  </mat-paginator>
 </div>

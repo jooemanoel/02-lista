@@ -1,22 +1,19 @@
 import { Injectable, signal } from '@angular/core';
-import { Item } from '../shared/interfaces/item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ControleService {
-  private _filtros = signal<Item>({
-    comprado: false, name: '', essencial: false
-  });
-  get filtros() {
-    return this._filtros;
+  private _filter = signal('');
+  get filter() {
+    return this._filter();
   }
-  alternarFiltro(check: boolean, filtro: keyof Item) {
-    this.filtros.update(filtros => {
-      if (filtro in filtros) {
-        filtros[filtro] = check as never;
-      }
-      return filtros;
-    });
+  alternarFiltro(check: boolean, filtro: string) {
+    if (filtro === 'comprado') {
+      this._filter.update(value => check ? value.concat('c') : value.replace('c', ''));
+    }
+    if (filtro === 'essencial') {
+      this._filter.update(value => check ? value.concat('e') : value.replace('e', ''));
+    }
   }
 }

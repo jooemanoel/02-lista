@@ -1,0 +1,12 @@
+<div class="container pt-3">
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <mat-checkbox value="comprado" (change)="alternar($event.checked, $event.source.value)">Apenas
+          selecionados</mat-checkbox>
+        <mat-checkbox value="essencial" (change)="alternar($event.checked, $event.source.value)">Apenas
+          essenciais</mat-checkbox>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

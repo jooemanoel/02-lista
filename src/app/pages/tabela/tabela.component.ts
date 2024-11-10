@@ -1,6 +1,8 @@
-import { Component, effect } from '@angular/core';
+import { AfterViewInit, Component, effect, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ControleService } from 'src/app/services/controle.service';
-import { ExampleDataSource } from 'src/app/shared/classes/example-data-source';
 import { ELEMENT_DATA, Item } from 'src/app/shared/interfaces/item';
 
 @Component({
@@ -8,32 +10,35 @@ import { ELEMENT_DATA, Item } from 'src/app/shared/interfaces/item';
   templateUrl: './tabela.component.html',
   styleUrls: ['./tabela.component.css'],
 })
-export class TabelaComponent {
+export class TabelaComponent implements OnInit, AfterViewInit {
   colunas: string[] = ['comprado', 'name', 'essencial'];
-  listaItens: Item[] = [];
-  dataSource = new ExampleDataSource(this.listaItens);
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private controle: ControleService) {
     effect(() => {
-      this.listaItens = ELEMENT_DATA.filter((item) => {
-        return (
-          (!this.filtros.comprado || item.comprado === this.filtros.comprado) &&
-          (!this.filtros.essencial || item.essencial === this.filtros.essencial)
-        );
-      });
-      this.dataSource = new ExampleDataSource(this.listaItens);
+      this.dataSource.filter = this.controle.filter;
     });
   }
-  alternar(event: boolean, texto: string) {
-    this.controle.alternarFiltro(event, texto as keyof Item);
+  ngOnInit() {
+    this.dataSource.filterPredicate = (data, filter: string) => {
+      return (
+        (filter.includes('c') ? data.comprado : true) &&
+        (filter.includes('e') ? data.essencial : true)
+      );
+    };
   }
-  get filtros() {
-    return this.controle.filtros();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    console.log(this.sort);
+    console.log(this.paginator);
   }
   alternarComprado(checked: boolean, element: Item) {
     element.comprado = checked;
   }
   alternarTudo(checked: boolean) {
-    this.listaItens.forEach((item) => {
+    this.dataSource.data.forEach((item) => {
       this.alternarComprado(checked, item);
     });
   }

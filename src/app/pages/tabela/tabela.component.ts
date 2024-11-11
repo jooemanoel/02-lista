@@ -31,8 +31,6 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    console.log(this.sort);
-    console.log(this.paginator);
   }
   alternarComprado(checked: boolean, element: Item) {
     element.comprado = checked;

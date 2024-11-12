@@ -16,18 +16,29 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { CheckboxFiltroComponent } from './components/checkbox-filtro/checkbox-filtro.component';
 import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormularioComponent } from './pages/formulario/formulario.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { ListaComponent } from './pages/lista/lista.component';
+import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TabelaComponent,
     CabecalhoComponent,
-    CheckboxFiltroComponent
+    CheckboxFiltroComponent,
+    FormularioComponent,
+    ListaComponent,
+    ConfiguracoesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
@@ -36,7 +47,10 @@ import { MatSortModule } from '@angular/material/sort';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

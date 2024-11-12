@@ -5,16 +5,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ControleService } from 'src/app/services/controle.service';
 import { ItemService } from 'src/app/services/item.service';
-import { ITENS_BASICOS, Item } from 'src/app/shared/interfaces/item';
+import { Item } from 'src/app/shared/interfaces/item';
 
 @Component({
-  selector: 'app-tabela',
-  templateUrl: './tabela.component.html',
-  styleUrls: ['./tabela.component.css'],
+  selector: 'app-lista',
+  templateUrl: './lista.component.html',
+  styleUrls: ['./lista.component.css']
 })
-export class TabelaComponent implements OnInit, AfterViewInit {
+export class ListaComponent implements OnInit, AfterViewInit {
   colunas: string[] = ['comprado', 'name', 'categoria'];
-  dataSource = new MatTableDataSource(ITENS_BASICOS);
+  dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private controle: ControleService, private itens: ItemService, private router: Router) {
@@ -22,10 +22,14 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       this.dataSource.filter = this.controle.filter;
     });
   }
+  get lista() {
+    return this.itens.lista;
+  }
   get regras() {
     return this.controle.regras;
   }
   ngOnInit() {
+    this.dataSource.data = this.itens.carregarLista();
     this.dataSource.filterPredicate = (data, filter: string) => {
       const filtros = JSON.parse(filter ?? '[]').join(',');
       return filtros.length ? filtros.includes(data.categoria) : true;
@@ -35,23 +39,23 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  alternarComprado(checked: boolean, element: Item) {
-    element.selecionado = checked;
+  alternar(checked: boolean, element: Item) {
+    if (this.regras.removerAposMarcar) {
+      this.itens.lista.splice(this.itens.lista.indexOf(element), 1);
+      this.dataSource.data = this.itens.lista;
+      this.itens.salvarLista();
+    }
+    else {
+      element.selecionado = checked;
+    }
   }
   alternarTudo(checked: boolean) {
     this.dataSource.data.forEach((item) => {
-      this.alternarComprado(checked, item);
+      this.alternar(checked, item);
     });
   }
-  criarLista() {
+  concluir() {
     this.itens.lista = [];
-    this.dataSource.data.forEach(item => {
-      if (item.selecionado) {
-        item.selecionado = false;
-        this.itens.lista.push(structuredClone(item));
-      }
-    });
     this.itens.salvarLista();
-    void this.router.navigateByUrl('lista');
   }
 }

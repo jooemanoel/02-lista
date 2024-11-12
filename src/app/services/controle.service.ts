@@ -11,4 +11,21 @@ export class ControleService {
   set filter(filtro: string) {
     this._filter.set(filtro);
   }
+  private _regras = {
+    filtrosNoComeco: false,
+    removerAposMarcar: false
+  }
+  get regras() {
+    return this._regras;
+  }
+  constructor() {
+    this.carregarRegras();
+  }
+  carregarRegras() {
+    const aux = JSON.parse(localStorage.getItem('regras') ?? '{}');
+    if (aux) this._regras = aux;
+  }
+  salvarRegras() {
+    localStorage.setItem('regras', JSON.stringify(this._regras));
+  }
 }

@@ -7,15 +7,11 @@ import { ControleService } from 'src/app/services/controle.service';
   styleUrls: ['./checkbox-filtro.component.css']
 })
 export class CheckboxFiltroComponent {
-  private filter = '';
+  categorias = ['alimentos', 'limpeza', 'higiene'];
+  private filter: string[] = [];
   constructor(private controle: ControleService) { }
   alternar(checked: boolean, texto: string) {
-    if (texto === 'comprado') {
-      this.filter = checked ? this.filter.concat('c') : this.filter.replace('c', '');
-    }
-    if (texto === 'essencial') {
-      this.filter = checked ? this.filter.concat('e') : this.filter.replace('e', '');
-    }
-    this.controle.filter = this.filter;
+    checked ? this.filter.push(texto) : this.filter.splice(this.filter.indexOf(texto), 1);
+    this.controle.filter = JSON.stringify(this.filter);
   }
 }

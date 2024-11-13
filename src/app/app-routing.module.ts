@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabela',
+    redirectTo: 'lista',
     pathMatch: 'full'
   }
 ];

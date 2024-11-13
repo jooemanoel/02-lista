@@ -25,11 +25,22 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   get regras() {
     return this.controle.regras;
   }
+  get editar() {
+    return this.itens.editar;
+  }
   ngOnInit() {
     this.dataSource.filterPredicate = (data, filter: string) => {
       const filtros = JSON.parse(filter ?? '[]').join(',');
       return filtros.length ? filtros.includes(data.categoria) : true;
     };
+    if (this.itens.editar) {
+      this.itens.lista.forEach(itemLista => {
+        const aux = this.dataSource.data.findIndex(itemData => itemData.name === itemLista.name);
+        if (aux !== -1) {
+          this.dataSource.data[aux].selecionado = true;
+        }
+      });
+    }
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -44,6 +55,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     });
   }
   criarLista() {
+    this.itens.editar = false;
     this.itens.lista = [];
     this.dataSource.data.forEach(item => {
       if (item.selecionado) {

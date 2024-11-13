@@ -26,6 +26,6 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="10" aria-label="Select page of users">
   </mat-paginator>
   <div class="pt-3">
-    <button mat-raised-button color="primary" (click)="criarLista()">Criar</button>
+    <button mat-raised-button color="primary" (click)="criarLista()">{{ editar ? 'Editar' : 'Criar' }}</button>
   </div>
 </div>

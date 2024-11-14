@@ -6,7 +6,7 @@
         <mat-checkbox (change)="alternarTudo($event.checked)"></mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let element">
-        <mat-checkbox [checked]="element.selecionado" (change)="alternarComprado($event.checked, element)">
+        <mat-checkbox [checked]="element.selecionado" (change)="alternar($event.checked, element)">
         </mat-checkbox>
       </td>
     </ng-container>

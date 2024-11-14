@@ -13,7 +13,7 @@ import { ITENS_BASICOS, Item } from 'src/app/shared/interfaces/item';
   styleUrls: ['./tabela.component.css'],
 })
 export class TabelaComponent implements OnInit, AfterViewInit {
-  colunas: string[] = ['comprado', 'name', 'categoria'];
+  colunas: string[] = ['selecionado', 'name', 'categoria'];
   dataSource = new MatTableDataSource(ITENS_BASICOS);
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,29 +33,28 @@ export class TabelaComponent implements OnInit, AfterViewInit {
       const filtros = JSON.parse(filter ?? '[]').join(',');
       return filtros.length ? filtros.includes(data.categoria) : true;
     };
-    if (this.itens.editar) {
-      this.itens.lista.forEach(itemLista => {
-        const aux = this.dataSource.data.findIndex(itemData => itemData.name === itemLista.name);
-        if (aux !== -1) {
-          this.dataSource.data[aux].selecionado = true;
-        }
-      });
-    }
+    this.itens.lista.forEach(itemLista => {
+      const aux = this.dataSource.data.findIndex(itemData => itemData.name === itemLista.name);
+      if (aux !== -1) {
+        this.dataSource.data[aux].selecionado = this.itens.editar;
+      }
+    });
+    this.itens.editar = false;
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    setTimeout(() => this.sort.sort({ id: 'name', start: 'asc', disableClear: false }), 0);
   }
-  alternarComprado(checked: boolean, element: Item) {
+  alternar(checked: boolean, element: Item) {
     element.selecionado = checked;
   }
   alternarTudo(checked: boolean) {
     this.dataSource.data.forEach((item) => {
-      this.alternarComprado(checked, item);
+      this.alternar(checked, item);
     });
   }
   criarLista() {
-    this.itens.editar = false;
     this.itens.lista = [];
     this.dataSource.data.forEach(item => {
       if (item.selecionado) {

@@ -23,8 +23,6 @@
     <tr mat-header-row *matHeaderRowDef="colunas"></tr>
     <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="10" aria-label="Select page of users">
-  </mat-paginator>
   <div class="pt-3">
     <button mat-raised-button color="primary" (click)="concluir()">Concluir compra</button>
   </div>

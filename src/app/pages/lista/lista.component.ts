@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, effect, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -16,7 +15,6 @@ export class ListaComponent implements OnInit, AfterViewInit {
   colunas: string[] = ['comprado', 'name', 'categoria'];
   dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private controle: ControleService, private itens: ItemService, private router: Router) {
     effect(() => {
       this.dataSource.filter = this.controle.filter;
@@ -36,7 +34,6 @@ export class ListaComponent implements OnInit, AfterViewInit {
     };
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
   alternar(checked: boolean, element: Item) {

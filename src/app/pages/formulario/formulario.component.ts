@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ControleService } from 'src/app/services/controle.service';
 
 @Component({
   selector: 'app-formulario',
@@ -9,7 +8,7 @@ import { ControleService } from 'src/app/services/controle.service';
 })
 export class FormularioComponent {
   value = '';
-  constructor(private router: Router, private controle: ControleService) { }
+  constructor(private router: Router) { }
   adicionar() {
     void this.router.navigateByUrl('tabela');
   }

@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 export class FormularioComponent {
   value = '';
   constructor(private router: Router) { }
+  update(event: string) {
+    this.value = event;
+  }
   adicionar() {
     void this.router.navigateByUrl('tabela');
   }

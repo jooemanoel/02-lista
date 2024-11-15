@@ -4,13 +4,13 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/lista">Ver lista atual</button>
-    <button mat-menu-item (click)="editar()">Editar lista atual</button>
+    <button mat-menu-item *ngIf="itens.lista.length" (click)="editar()">Editar lista atual</button>
     <button mat-menu-item routerLink="/tabela">Criar nova lista</button>
     <button mat-menu-item routerLink="/formulario">Adicionar item recorrente</button>
     <button mat-menu-item routerLink="/configuracoes">Configurações</button>
   </mat-menu>
   <div class="flex-fill">{{ paginaAtual }}</div>
-  <button mat-icon-button class="example-icon" (click)="editar()">
+  <button mat-icon-button *ngIf="itens.lista.length" class="example-icon" (click)="editar()">
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>

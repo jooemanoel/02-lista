@@ -24,11 +24,14 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
+      type: 'text',
       dir: require('path').join(__dirname, './coverage/02-lista'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'text' },
+        { type: 'text-summary' },
+        { type: 'html', subdir: 'html' },
+        { type: 'lcov', subdir: '.' }
       ]
     },
     reporters: ['progress', 'kjhtml'],

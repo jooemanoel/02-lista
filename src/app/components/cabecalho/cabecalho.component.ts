@@ -20,11 +20,6 @@ export class CabecalhoComponent {
         this.alterarTitulo(this.rota.urlAfterRedirects);
       }
     });
-    // router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.alterarTitulo(event.urlAfterRedirects);
-    //   }
-    // });
   }
   get itens() {
     return this._itens;

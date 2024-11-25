@@ -1,0 +1,127 @@
+[
+    {
+        "name": "arroz",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "feijao",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "macarrão",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "manteiga",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "sal",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "açúcar",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "café",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "leite",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "biscoito",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "suco",
+        "categoria": "alimentos",
+        "selecionado": false
+    },
+    {
+        "name": "sabão em pó",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "amaciante de roupas",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "detergente",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "pinho",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "pano de chão",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "esponja",
+        "categoria": "limpeza",
+        "selecionado": false
+    },
+    {
+        "name": "sabonete",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "shampoo",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "condicionador",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "creme dental",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "escova de dentes",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "desodorante",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "barbeador",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "sabonete líquido",
+        "categoria": "higiene",
+        "selecionado": false
+    },
+    {
+        "name": "hambúrguer",
+        "categoria": "alimentos",
+        "selecionado": false
+    }
+]

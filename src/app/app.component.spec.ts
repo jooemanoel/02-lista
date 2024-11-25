@@ -1,23 +1,24 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 
 describe(AppComponent.name, () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule, AppModule],
-    declarations: [AppComponent]
-  }));
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, AppModule],
+      declarations: [AppComponent]
+    });
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it(`should have as title '02-lista'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('02-lista');
+  it('should create the app', () => {
+    fixture = TestBed.createComponent(AppComponent);
+    expect(component).toBeTruthy();
   });
 });

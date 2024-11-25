@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ControleService } from 'src/app/services/controle.service';
 import { ItemService } from 'src/app/services/item.service';
-import { Item } from 'src/app/shared/interfaces/item';
+import { Item } from 'src/app/shared/models/interfaces/item';
 
 @Component({
   selector: 'app-lista',

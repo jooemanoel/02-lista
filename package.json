@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": " ng lint && ng serve -o",
+    "start": "ng lint --fix && ng serve -o",
     "build": "ng build --configuration=production --output-path docs --base-href /02-lista/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch=false --source-map --code-coverage",
     "lint": "ng lint"
   },
   "private": true,
@@ -38,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "^8.51.0",
+    "istanbul-reports": "^3.1.7",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -23,7 +23,7 @@ const routes: Routes = [
     component: ConfiguracoesComponent
   },
   {
-    path: '',
+    path: '**',
     redirectTo: 'lista',
     pathMatch: 'full'
   }

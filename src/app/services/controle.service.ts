@@ -4,12 +4,12 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root'
 })
 export class ControleService {
-  private _filter = signal('');
-  get filter() {
-    return this._filter();
+  private _filtro = signal<string[]>([]);
+  get filtro() {
+    return this._filtro();
   }
-  set filter(filtro: string) {
-    this._filter.set(filtro);
+  set filtro(filtro: string[]) {
+    this._filtro.set(filtro);
   }
   private _regras = {
     filtrosNoComeco: false,

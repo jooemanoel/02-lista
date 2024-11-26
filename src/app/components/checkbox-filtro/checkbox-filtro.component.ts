@@ -8,10 +8,13 @@ import { ControleService } from 'src/app/services/controle.service';
 })
 export class CheckboxFiltroComponent {
   categorias = ['alimentos', 'limpeza', 'higiene'];
-  private filter: string[] = [];
-  constructor(private controle: ControleService) { }
+  constructor(private _controle: ControleService) { }
+  get controle() {
+    return this._controle;
+  }
   alternar(checked: boolean, texto: string) {
-    checked ? this.filter.push(texto) : this.filter.splice(this.filter.indexOf(texto), 1);
-    this.controle.filter = JSON.stringify(this.filter);
+    this.controle.filtro = checked
+      ? [...this.controle.filtro, texto]
+      : this.controle.filtro.filter(x => x !== texto);
   }
 }

@@ -13,4 +13,15 @@ describe(ControleService.name, () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it(`L12: filter must be set`, () => {
+    service.filtro = ['alimentos'];
+    expect(service.filtro).toEqual(['alimentos']);
+  });
+
+  it(`#${ControleService.prototype.salvarRegras.name} should save a valid object into localStorage`, () => {
+    service.salvarRegras();
+    const aux = localStorage.getItem('regras');
+    expect(aux).toBeTruthy();
+  });
 });

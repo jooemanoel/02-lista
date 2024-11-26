@@ -7,19 +7,19 @@ import { ControleService } from 'src/app/services/controle.service';
   styleUrls: ['./configuracoes.component.css']
 })
 export class ConfiguracoesComponent implements OnInit {
-  constructor(private controle: ControleService) { }
+  constructor(private _controle: ControleService) { }
   get regras() {
-    return this.controle.regras;
+    return this._controle.regras;
   }
   ngOnInit(): void {
-    this.controle.carregarRegras();
+    this._controle.carregarRegras();
   }
   alternarFiltrosNoComeco(checked: boolean) {
-    this.controle.regras.filtrosNoComeco = checked;
-    this.controle.salvarRegras();
+    this._controle.regras.filtrosNoComeco = checked;
+    this._controle.salvarRegras();
   }
   removerAposMarcar(checked: boolean) {
-    this.controle.regras.removerAposMarcar = checked;
-    this.controle.salvarRegras();
+    this._controle.regras.removerAposMarcar = checked;
+    this._controle.salvarRegras();
   }
 }

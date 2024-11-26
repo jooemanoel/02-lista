@@ -14,32 +14,32 @@ import { ITENS_BASICOS, Item } from 'src/app/shared/models/interfaces/item';
 })
 export class TabelaComponent implements OnInit, AfterViewInit {
   colunas: string[] = ['selecionado', 'name', 'categoria'];
-  dataSource = new MatTableDataSource(ITENS_BASICOS);
+  dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private controle: ControleService, private itens: ItemService, private router: Router) {
+  constructor(private _controle: ControleService, private _itens: ItemService, private _router: Router) {
     effect(() => {
-      this.dataSource.filter = this.controle.filter;
+      this.dataSource.filter = this._controle.filtro.join(',');
     });
   }
   get regras() {
-    return this.controle.regras;
+    return this._controle.regras;
   }
   get editar() {
-    return this.itens.editar;
+    return this._itens.editar;
   }
   ngOnInit() {
+    this.dataSource.data = structuredClone(ITENS_BASICOS);
     this.dataSource.filterPredicate = (data, filter: string) => {
-      const filtros = JSON.parse(filter ?? '[]').join(',');
-      return filtros.length ? filtros.includes(data.categoria) : true;
+      return filter.includes(data.categoria);
     };
-    this.itens.lista.forEach(itemLista => {
-      const aux = this.dataSource.data.findIndex(itemData => itemData.name === itemLista.name);
+    this._itens.lista.forEach(itemLista => {
+      const aux = this.dataSource.data.findIndex(x => x.name === itemLista.name);
       if (aux !== -1) {
-        this.dataSource.data[aux].selecionado = this.itens.editar;
+        this.dataSource.data[aux].selecionado = this._itens.editar;
       }
     });
-    this.itens.editar = false;
+    this._itens.editar = false;
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -55,14 +55,10 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     });
   }
   criarLista() {
-    this.itens.lista = [];
-    this.dataSource.data.forEach(item => {
-      if (item.selecionado) {
-        item.selecionado = false;
-        this.itens.lista.push(structuredClone(item));
-      }
-    });
-    this.itens.salvarLista();
-    void this.router.navigateByUrl('lista');
+    this._itens.lista = [];
+    this._itens.lista = this.dataSource.data.filter(x => x.selecionado === true);
+    this._itens.lista.forEach(item => item.selecionado = false);
+    this._itens.salvarLista();
+    void this._router.navigateByUrl('lista');
   }
 }

@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, effect, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { ControleService } from 'src/app/services/controle.service';
 import { ItemService } from 'src/app/services/item.service';
 import { Item } from 'src/app/shared/models/interfaces/item';
@@ -15,22 +14,21 @@ export class ListaComponent implements OnInit, AfterViewInit {
   colunas: string[] = ['comprado', 'name', 'categoria'];
   dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private controle: ControleService, private itens: ItemService, private router: Router) {
+  constructor(private _controle: ControleService, private _itens: ItemService) {
     effect(() => {
-      this.dataSource.filter = this.controle.filter;
+      this.dataSource.filter = this._controle.filtro.join(',');
     });
   }
   get lista() {
-    return this.itens.lista;
+    return this._itens.lista;
   }
   get regras() {
-    return this.controle.regras;
+    return this._controle.regras;
   }
   ngOnInit() {
-    this.dataSource.data = this.itens.carregarLista();
+    this.dataSource.data = this._itens.carregarLista();
     this.dataSource.filterPredicate = (data, filter: string) => {
-      const filtros = JSON.parse(filter ?? '[]').join(',');
-      return filtros.length ? filtros.includes(data.categoria) : true;
+      return filter.includes(data.categoria);
     };
   }
   ngAfterViewInit() {
@@ -38,9 +36,9 @@ export class ListaComponent implements OnInit, AfterViewInit {
   }
   alternar(checked: boolean, element: Item) {
     if (this.regras.removerAposMarcar) {
-      this.itens.lista.splice(this.itens.lista.indexOf(element), 1);
-      this.dataSource.data = this.itens.lista;
-      this.itens.salvarLista();
+      this._itens.lista = this._itens.lista.filter(x => x !== element);
+      this.dataSource.data = this._itens.lista;
+      this._itens.salvarLista();
     }
     else {
       element.selecionado = checked;
@@ -52,7 +50,7 @@ export class ListaComponent implements OnInit, AfterViewInit {
     });
   }
   concluir() {
-    this.itens.lista = [];
-    this.itens.salvarLista();
+    this._itens.lista = [];
+    this._itens.salvarLista();
   }
 }

@@ -20,7 +20,6 @@ export class ControleService {
   }
   constructor() {
     this.carregarRegras();
-
   }
   carregarRegras() {
     const aux = JSON.parse(localStorage.getItem('regras') ?? '{}');

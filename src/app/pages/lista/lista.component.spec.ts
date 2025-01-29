@@ -20,8 +20,8 @@ describe(ListaComponent.name, () => {
       declarations: [ListaComponent],
       providers: [
         { provide: ControleService, useValue: controleService },
-        { provide: ItemService, useValue: itemService }
-      ]
+        { provide: ItemService, useValue: itemService },
+      ],
     });
     fixture = TestBed.createComponent(ListaComponent);
     component = fixture.componentInstance;
@@ -49,7 +49,7 @@ describe(ListaComponent.name, () => {
     itemService.lista = ITENS_BASICOS;
     fixture.detectChanges();
     const sizeBefore = component.dataSource.data.length;
-    component.alternar(true, component.dataSource.data[0]);
+    component.check(true, component.dataSource.data[0]);
     fixture.detectChanges();
     const sizeAfter = component.dataSource.data.length;
     expect(sizeBefore - sizeAfter).toEqual(1);
@@ -58,10 +58,10 @@ describe(ListaComponent.name, () => {
     controleService.regras.removerAposMarcar = false;
     itemService.lista = ITENS_BASICOS;
     fixture.detectChanges();
-    component.dataSource.data[0].selecionado = false;
-    component.alternar(true, component.dataSource.data[0]);
+    component.dataSource.data[0].checked = false;
+    component.check(true, component.dataSource.data[0]);
     fixture.detectChanges();
-    expect(component.dataSource.data[0].selecionado).toBeTrue();
+    expect(component.dataSource.data[0].checked).toBeTrue();
   });
   it(`#${ListaComponent.prototype.alternarTudo.name} deve marcar todos os itens`, () => {
     controleService.regras.removerAposMarcar = false;
@@ -69,7 +69,7 @@ describe(ListaComponent.name, () => {
     fixture.detectChanges();
     component.alternarTudo(true);
     fixture.detectChanges();
-    const aux = component.dataSource.data.every(x => x.selecionado === true);
+    const aux = component.dataSource.data.every((x) => x.checked === true);
     expect(aux).toBeTrue();
   });
   it(`#${ListaComponent.prototype.concluir.name} deve limpar a lista`, () => {

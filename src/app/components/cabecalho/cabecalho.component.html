@@ -3,14 +3,22 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/lista">Ver lista atual</button>
-    <button mat-menu-item *ngIf="itens.lista.length" (click)="editar()">Editar lista atual</button>
-    <button mat-menu-item routerLink="/tabela">Criar nova lista</button>
-    <button mat-menu-item routerLink="/formulario">Adicionar item recorrente</button>
-    <button mat-menu-item routerLink="/configuracoes">Configurações</button>
+    <button mat-menu-item routerLink="/lista" *ngIf="atual">Lista atual</button>
+    <button mat-menu-item routerLink="/tabela">Minhas listas</button>
   </mat-menu>
-  <div class="flex-fill">{{ paginaAtual }}</div>
-  <button mat-icon-button *ngIf="itens.lista.length" class="example-icon" (click)="editar()">
-    <mat-icon>add</mat-icon>
-  </button>
+  <div class="flex-fill d-flex pe-3 align-items-center">
+    <div class="flex-fill">
+      {{ titulo }}
+    </div>
+    <div>
+      <button mat-mini-fab (click)="evento()">
+        <mat-icon *ngIf="titulo === 'Minhas listas'; else checked"
+          >add</mat-icon
+        >
+        <ng-template #checked>
+          <mat-icon>home</mat-icon>
+        </ng-template>
+      </button>
+    </div>
+  </div>
 </mat-toolbar>

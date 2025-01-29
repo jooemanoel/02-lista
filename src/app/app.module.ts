@@ -13,7 +13,6 @@ import { TabelaComponent } from './pages/tabela/tabela.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { CheckboxFiltroComponent } from './components/checkbox-filtro/checkbox-filtro.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormularioComponent } from './pages/formulario/formulario.component';
@@ -29,7 +28,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     TabelaComponent,
     CabecalhoComponent,
-    CheckboxFiltroComponent,
     FormularioComponent,
     ListaComponent,
     ConfiguracoesComponent

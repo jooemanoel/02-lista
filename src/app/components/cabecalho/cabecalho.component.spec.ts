@@ -16,7 +16,9 @@ describe(CabecalhoComponent.name, () => {
   const eventsSubject = new Subject<NavigationEnd>();
   const mockRouter = {
     events: eventsSubject.asObservable(),
-    navigateByUrl: jasmine.createSpy('navigateByUrl').and.returnValue(Promise.resolve(true)),
+    navigateByUrl: jasmine
+      .createSpy('navigateByUrl')
+      .and.returnValue(Promise.resolve(true)),
     routerState: { root: {} }, // Adiciona a propriedade 'root' esperada
   };
 
@@ -28,8 +30,8 @@ describe(CabecalhoComponent.name, () => {
       declarations: [CabecalhoComponent],
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: ItemService, useValue: itemService }
-      ]
+        { provide: ItemService, useValue: itemService },
+      ],
     });
     fixture = TestBed.createComponent(CabecalhoComponent);
     component = fixture.componentInstance;
@@ -48,34 +50,34 @@ describe(CabecalhoComponent.name, () => {
   it(`#${CabecalhoComponent.prototype.alterarTitulo.name} deve alterar a pagina no caso '/lista'`, () => {
     fixture.detectChanges();
     component.alterarTitulo('/lista');
-    expect(component.paginaAtual).toEqual('Lista de compras');
+    expect(component.titulo).toEqual('Lista de compras');
   });
   it(`#${CabecalhoComponent.prototype.alterarTitulo.name} deve alterar a pagina no caso '/tabela'`, () => {
     fixture.detectChanges();
     itemService.editar = false;
     component.alterarTitulo('/tabela');
-    expect(component.paginaAtual).toEqual('Criar nova lista');
+    expect(component.titulo).toEqual('Criar nova lista');
   });
   it(`#${CabecalhoComponent.prototype.alterarTitulo.name} deve alterar a pagina no caso '/tabela'`, () => {
     fixture.detectChanges();
     itemService.editar = true;
     component.alterarTitulo('/tabela');
-    expect(component.paginaAtual).toEqual('Editar lista atual');
+    expect(component.titulo).toEqual('Editar lista atual');
   });
   it(`#${CabecalhoComponent.prototype.alterarTitulo.name} deve alterar a pagina no caso '/formulario'`, () => {
     fixture.detectChanges();
     component.alterarTitulo('/formulario');
-    expect(component.paginaAtual).toEqual('Criar item recorrente');
+    expect(component.titulo).toEqual('Criar item recorrente');
   });
   it(`#${CabecalhoComponent.prototype.alterarTitulo.name} deve alterar a pagina no caso '/configuracoes'`, () => {
     fixture.detectChanges();
     component.alterarTitulo('/configuracoes');
-    expect(component.paginaAtual).toEqual('Configurações');
+    expect(component.titulo).toEqual('Configurações');
   });
-  it(`#${CabecalhoComponent.prototype.editar.name} deve mudar o valor de editar`, () => {
+  it(`#${CabecalhoComponent.prototype.evento.name} deve mudar o valor de editar`, () => {
     fixture.detectChanges();
     itemService.editar = false;
-    component.editar();
+    component.evento();
     expect(itemService.editar).toBeTrue();
   });
 });

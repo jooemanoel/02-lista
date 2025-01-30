@@ -6,7 +6,7 @@
   <mat-form-field class="w-100">
     <mat-label>Adicionar</mat-label>
     <input matInput type="text" [(ngModel)]="novo" />
-    <button *ngIf="novo" matSuffix mat-icon-button (click)="adicionar(novo)">
+    <button *ngIf="novo" matSuffix mat-icon-button (click)="adicionar()">
       <mat-icon>add</mat-icon>
     </button>
   </mat-form-field>

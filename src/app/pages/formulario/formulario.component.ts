@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ListaService } from 'src/app/services/lista.service';
 
 @Component({
@@ -8,20 +7,18 @@ import { ListaService } from 'src/app/services/lista.service';
   styleUrls: ['./formulario.component.css'],
 })
 export class FormularioComponent {
+  @Output() pageChange = new EventEmitter();
   value = '';
-  constructor(
-    private router: Router,
-    private service: ListaService,
-  ) {}
+  constructor(private service: ListaService) {}
   update(event: string) {
     this.value = event;
   }
   adicionar() {
     if (!this.value || !this.value.trim()) return;
     this.service.criarLista(this.value.toUpperCase());
-    void this.router.navigateByUrl('tabela');
+    this.pageChange.emit(1);
   }
   homeClick() {
-    void this.router.navigateByUrl('tabela');
+    this.pageChange.emit(1);
   }
 }

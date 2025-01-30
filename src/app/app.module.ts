@@ -1,27 +1,27 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
-import { TabelaComponent } from './pages/tabela/tabela.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatMenuModule } from '@angular/material/menu';
 import { FormularioComponent } from './pages/formulario/formulario.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './pages/lista/lista.component';
-import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.component';
-import { HttpClientModule } from '@angular/common/http';
+import { MainComponent } from './pages/main/main.component';
+import { TabelaComponent } from './pages/tabela/tabela.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     CabecalhoComponent,
     FormularioComponent,
     ListaComponent,
-    ConfiguracoesComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,12 +49,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   exports: [],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -10,11 +10,14 @@
           [ngModel]="value"
           (ngModelChange)="update($event)"
         />
-        <button *ngIf="value" matSuffix mat-icon-button (click)="update('')">
-          <mat-icon>close</mat-icon>
-        </button>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="adicionar()">
+      <button
+        class="w-100"
+        mat-raised-button
+        color="primary"
+        (click)="adicionar()"
+        [disabled]="!value"
+      >
         Adicionar
       </button>
     </mat-card-content>

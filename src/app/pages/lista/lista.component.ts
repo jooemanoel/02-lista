@@ -1,7 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { ListaService } from 'src/app/services/lista.service';
 import { Item } from 'src/app/shared/models/interfaces/item';
 import { Lista } from 'src/app/shared/models/interfaces/lista';
@@ -12,15 +18,13 @@ import { Lista } from 'src/app/shared/models/interfaces/lista';
   styleUrls: ['./lista.component.css'],
 })
 export class ListaComponent implements OnInit, AfterViewInit {
+  @Output() pageChange = new EventEmitter();
   novo = '';
+  lista: Lista | null = null;
   colunas: string[] = ['checked', 'nome', 'delete'];
   dataSource = new MatTableDataSource<Item>([]);
-  lista: Lista | null = null;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(
-    private service: ListaService,
-    private router: Router,
-  ) {}
+  constructor(private service: ListaService) {}
   ngOnInit() {
     this.carregarLista();
   }
@@ -31,8 +35,8 @@ export class ListaComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-  adicionar(value: string) {
-    this.service.criarItem(value);
+  adicionar() {
+    this.service.criarItem(this.novo.toUpperCase());
     this.carregarLista();
     this.novo = '';
   }
@@ -46,6 +50,6 @@ export class ListaComponent implements OnInit, AfterViewInit {
     this.carregarLista();
   }
   homeClick() {
-    void this.router.navigateByUrl('tabela');
+    this.pageChange.emit(1);
   }
 }

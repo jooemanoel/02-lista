@@ -1,0 +1,6 @@
+<app-tabela *ngIf="page === 1" (pageChange)="mudarPagina($event)"></app-tabela>
+<app-lista *ngIf="page === 2" (pageChange)="mudarPagina($event)"></app-lista>
+<app-formulario
+  *ngIf="page === 3"
+  (pageChange)="mudarPagina($event)"
+></app-formulario>

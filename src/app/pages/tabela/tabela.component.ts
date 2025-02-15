@@ -23,6 +23,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private service: ListaService) {}
   ngOnInit() {
+    if (!this.service.listas.length) {
+      this.service.carregarListas().subscribe((res) => {
+        this.service.listas = res;
+        this.dataSource.data = res;
+      });
+    }
     this.dataSource.data = this.service.listas;
   }
   ngAfterViewInit(): void {

@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Lista } from '../shared/models/interfaces/lista';
+import { map, tap } from 'rxjs';
 import { Item } from '../shared/models/interfaces/item';
+import { Lista } from '../shared/models/interfaces/lista';
 
 @Injectable({
   providedIn: 'root',
@@ -20,20 +22,35 @@ export class ListaService {
   set id(x: number) {
     this._id = x;
   }
-  constructor() {
-    this.carregarListas();
-  }
+  constructor(private http: HttpClient) {}
   carregarListas() {
-    if (!this._listas.length)
-      this._listas = JSON.parse(localStorage.getItem('listas') ?? '[]');
-    if (!this._id) {
-      this.id = JSON.parse(localStorage.getItem('atual') ?? '0');
-    }
+    return this.http
+      .get<{
+        data: string[][];
+      }>('https://json-server-seven-alpha.vercel.app/read')
+      .pipe(
+        map((response) => response.data || []), // Garante que 'data' seja tratado corretamente
+        map((data) =>
+          data.flatMap((linha) =>
+            linha.map((coluna) => JSON.parse(coluna) as Lista),
+          ),
+        ),
+        tap((listas) => console.log('Listas carregadas:', listas)),
+        tap((listas) => (this.listas = listas)),
+      );
   }
   salvarListas() {
-    console.log(this._listas);
-    localStorage.setItem('listas', JSON.stringify(this._listas));
-    if (this.id) localStorage.setItem('atual', JSON.stringify(this.id));
+    const save = this.listas.map((lista) => [JSON.stringify(lista)]);
+    const requisicao = {
+      values: save,
+    };
+    console.log('Requisição: ', requisicao);
+    this.http
+      .post('https://json-server-seven-alpha.vercel.app/write', requisicao)
+      .subscribe({
+        next: (res) => console.log('Dados salvos:', res),
+        error: (error) => console.error('Erro ao salvar:', error),
+      });
   }
   criarLista(x: string) {
     const lista: Lista = {

@@ -17,6 +17,7 @@ import { Lista } from 'src/app/shared/models/interfaces/lista';
   styleUrls: ['./tabela.component.css'],
 })
 export class TabelaComponent implements OnInit, AfterViewInit {
+  titulo = 'CARREGANDO...';
   @Output() pageChange = new EventEmitter();
   colunas: string[] = ['ver', 'nome', 'excluir'];
   dataSource = new MatTableDataSource<Lista>([]);
@@ -24,9 +25,18 @@ export class TabelaComponent implements OnInit, AfterViewInit {
   constructor(private service: ListaService) {}
   ngOnInit() {
     if (!this.service.listas.length) {
-      this.service.carregarListas().subscribe((res) => {
-        this.service.listas = res;
-        this.dataSource.data = res;
+      this.service.carregarListas().subscribe({
+        next: (res) => {
+          this.service.listas = res;
+          this.dataSource.data = res;
+          this.titulo = this.dataSource.data.length
+            ? 'LISTAS ATUAIS'
+            : 'NÃO HÁ NENHUMA LISTA';
+        },
+        error: (error) => {
+          this.titulo = 'ERRO NO CARREGAMENTO DA LISTA';
+          console.log(error);
+        },
       });
     }
     this.dataSource.data = this.service.listas;

@@ -12,9 +12,7 @@
     <ng-container [matColumnDef]="colunas[1]">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         <div class="w-100 text-center">
-          {{
-            dataSource.data.length ? "LISTAS ATUAIS" : "NÃO HÁ NENHUMA LISTA"
-          }}
+          {{ titulo }}
         </div>
       </th>
       <td mat-cell *matCellDef="let element">

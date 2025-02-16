@@ -38,8 +38,12 @@ export class TabelaComponent implements OnInit, AfterViewInit {
           console.log(error);
         },
       });
+    } else {
+      this.dataSource.data = this.service.listas;
+      this.titulo = this.dataSource.data.length
+        ? 'LISTAS ATUAIS'
+        : 'NÃO HÁ NENHUMA LISTA';
     }
-    this.dataSource.data = this.service.listas;
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

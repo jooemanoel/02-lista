@@ -22,6 +22,7 @@ import { FormularioComponent } from './pages/formulario/formulario.component';
 import { ListaComponent } from './pages/lista/lista.component';
 import { MainComponent } from './pages/main/main.component';
 import { TabelaComponent } from './pages/tabela/tabela.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TabelaComponent } from './pages/tabela/tabela.component';
     FormularioComponent,
     ListaComponent,
     MainComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

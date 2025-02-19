@@ -1,4 +1,8 @@
-<app-cabecalho titulo="Minhas listas" (btnClick)="criarLista()"></app-cabecalho>
+<app-cabecalho
+  titulo="Minhas listas"
+  (btnClick)="criarLista()"
+  (menuClick)="menuClick()"
+></app-cabecalho>
 <div class="container pt-3">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container [matColumnDef]="colunas[0]">

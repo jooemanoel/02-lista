@@ -59,4 +59,7 @@ export class TabelaComponent implements OnInit, AfterViewInit {
     this.service.excluirLista(id);
     this.dataSource.data = this.service.listas;
   }
+  menuClick() {
+    this.pageChange.emit(4);
+  }
 }

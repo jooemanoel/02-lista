@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent {
-  page = 1;
+  page = 4;
   mudarPagina(x: number) {
     this.page = x;
   }

@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,9 +21,9 @@ import { AppComponent } from './app.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 import { FormularioComponent } from './pages/formulario/formulario.component';
 import { ListaComponent } from './pages/lista/lista.component';
+import { LoginComponent } from './pages/login/login.component';
 import { MainComponent } from './pages/main/main.component';
 import { TabelaComponent } from './pages/tabela/tabela.component';
-import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LoginComponent } from './pages/login/login.component';
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [],
   exports: [],

@@ -1,12 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import {
-  getFirestore,
-  collection,
-  getDocs,
   addDoc,
-  doc,
+  collection,
   deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
   updateDoc,
 } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,54 +28,70 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 import { Injectable } from '@angular/core';
+import { Registro } from '../shared/models/interfaces/registro';
 import { Usuario } from '../shared/models/interfaces/usuario';
-import { UsuarioComId } from '../shared/models/interfaces/usuarioComId';
+import { ListaFire } from '../shared/models/interfaces/ListaFire';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
-  usuarios: UsuarioComId[] = [];
-  async listarUsuarios(): Promise<UsuarioComId[]> {
-    this.usuarios = [];
+  usuarios: Registro<Usuario>[] = [];
+  usuarioAtual!: Registro<Usuario>;
+  listaAtual!: Registro<ListaFire>;
+  async listar<T>(colecao: string): Promise<Registro<T>[]> {
+    const colecaoRef = collection(db, colecao);
+    const snapshot = await getDocs(colecaoRef);
 
-    const usuariosRef = collection(db, 'usuarios');
-    const snapshot = await getDocs(usuariosRef);
-
-    snapshot.forEach((doc) => {
-      const usuario: UsuarioComId = doc.data() as UsuarioComId;
-      usuario.id = doc.id;
-      this.usuarios = [...this.usuarios, usuario];
-    });
-    console.log(this.usuarios);
-    return this.usuarios;
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data() as T,
+    }));
   }
-  async adicionarUsuario(usuario: Usuario): Promise<void> {
+  async adicionar<T extends Record<string, unknown>>(
+    colecao: string,
+    dado: T,
+  ): Promise<string> {
     try {
-      const docRef = await addDoc(collection(db, 'usuarios'), usuario);
-      console.log('Usuário adicionado com ID:', docRef.id);
+      const docRef = await addDoc(collection(db, colecao), dado);
+      console.log('Documento adicionado com ID:', docRef.id);
+      return docRef.id; // Agora retorna o ID do documento criado!
     } catch (error) {
-      console.error('Erro ao adicionar usuário:', error);
+      console.error('Erro ao adicionar documento:', error);
+      return '';
     }
   }
-  async excluirUsuario(id: string): Promise<void> {
+  async excluir(colecao: string, id: string): Promise<void> {
     try {
-      await deleteDoc(doc(db, 'usuarios', id));
-      console.log(`Usuário com ID ${id} excluído com sucesso.`);
+      await deleteDoc(doc(db, colecao, id));
+      console.log(
+        `Documento com ID ${id} excluído com sucesso da coleção ${colecao}.`,
+      );
     } catch (error) {
-      console.error('Erro ao excluir usuário:', error);
+      console.error(
+        `Erro ao excluir documento ${id} da coleção ${colecao}:`,
+        error,
+      );
+      throw error;
     }
   }
-  async editarUsuario(
+  async atualizar<T>(
+    colecao: string,
     id: string,
-    novosDados: Partial<{ nome: string; apelido: string }>,
+    novosDados: Partial<T>,
   ): Promise<void> {
     try {
-      const usuarioRef = doc(db, 'usuarios', id);
+      const usuarioRef = doc(db, colecao, id);
       await updateDoc(usuarioRef, novosDados);
       console.log(`Usuário com ID ${id} atualizado com sucesso.`);
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
     }
+  }
+  buscarUsuario(input: Usuario): Registro<Usuario> | null | undefined {
+    const search = this.usuarios.find((x) => x.data.nome === input.nome);
+    if (!search) return undefined;
+    if (search.data.senha !== input.senha) return null;
+    return search;
   }
 }

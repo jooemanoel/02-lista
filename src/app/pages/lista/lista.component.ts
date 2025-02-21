@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ListaService } from 'src/app/services/lista.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { Item } from 'src/app/shared/models/interfaces/item';
-import { Lista } from 'src/app/shared/models/interfaces/lista';
+import { ListaFire } from 'src/app/shared/models/interfaces/ListaFire';
 
 @Component({
   selector: 'app-lista',
@@ -20,33 +20,49 @@ import { Lista } from 'src/app/shared/models/interfaces/lista';
 export class ListaComponent implements OnInit, AfterViewInit {
   @Output() pageChange = new EventEmitter();
   novo = '';
-  lista: Lista | null = null;
   colunas: string[] = ['checked', 'nome', 'delete'];
   dataSource = new MatTableDataSource<Item>([]);
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private service: ListaService) {}
+  constructor(private firebase: FirebaseService) {}
+  get lista() {
+    return this.firebase.listaAtual;
+  }
   ngOnInit() {
     this.carregarLista();
   }
   carregarLista() {
-    this.lista = this.service.buscarLista() ?? null;
-    this.dataSource.data = this.lista?.itens || [];
+    this.dataSource.data = this.lista.data.itens;
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-  adicionar() {
-    this.service.criarItem(this.novo.toUpperCase());
+  async atualizarLista() {
+    await this.firebase.atualizar<ListaFire>(
+      this.firebase.usuarioAtual.data.nome,
+      this.lista.id,
+      this.lista.data,
+    );
+  }
+  async adicionar() {
+    const item: Item = { nome: this.novo.toUpperCase(), checked: false };
+    this.lista.data.itens = [...this.lista.data.itens, item];
+    await this.atualizarLista();
     this.carregarLista();
     this.novo = '';
   }
-  excluir(id: number) {
-    this.service.excluirItem(id);
+  async excluir(nome: string) {
+    this.lista.data.itens = this.lista.data.itens.filter(
+      (x) => x.nome !== nome,
+    );
+    await this.atualizarLista();
     this.carregarLista();
   }
-  check(checked: boolean, id: number) {
-    console.log(checked, id);
-    this.service.check(checked, id);
+  async check(checked: boolean, nome: string) {
+    console.log(checked, nome);
+    const item = this.lista.data.itens.find((x) => x.nome === nome);
+    if (!item) return;
+    item.checked = checked;
+    await this.atualizarLista();
     this.carregarLista();
   }
   homeClick() {

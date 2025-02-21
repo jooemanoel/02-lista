@@ -1,6 +1,7 @@
 <app-cabecalho
-  [titulo]="lista?.nome ?? ''"
+  [titulo]="lista.data.nome"
   (btnClick)="homeClick()"
+  (menuClick)="pageChange.emit(4)"
 ></app-cabecalho>
 <div class="container pt-3">
   <mat-form-field class="w-100">
@@ -18,14 +19,14 @@
       <td mat-cell *matCellDef="let element">
         <mat-checkbox
           [checked]="element.checked"
-          (change)="check($event.checked, element.id)"
+          (change)="check($event.checked, element.nome)"
         >
         </mat-checkbox>
       </td>
     </ng-container>
     <ng-container [matColumnDef]="colunas[1]">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ lista?.nome }}
+        {{ lista.data.nome }}
       </th>
       <td mat-cell *matCellDef="let element">
         <div class="w-100 text-center">{{ element.nome }}</div>
@@ -34,7 +35,7 @@
     <ng-container [matColumnDef]="colunas[2]">
       <th mat-header-cell *matHeaderCellDef style="width: 40px"></th>
       <td mat-cell *matCellDef="let element">
-        <button matSuffix mat-icon-button (click)="excluir(element.id)">
+        <button matSuffix mat-icon-button (click)="excluir(element.nome)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

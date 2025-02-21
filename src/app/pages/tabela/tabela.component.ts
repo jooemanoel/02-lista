@@ -8,8 +8,10 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ListaService } from 'src/app/services/lista.service';
-import { Lista } from 'src/app/shared/models/interfaces/lista';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { ListaFire } from 'src/app/shared/models/interfaces/ListaFire';
+import { Registro } from 'src/app/shared/models/interfaces/registro';
+import { Usuario } from 'src/app/shared/models/interfaces/usuario';
 
 @Component({
   selector: 'app-tabela',
@@ -17,49 +19,38 @@ import { Lista } from 'src/app/shared/models/interfaces/lista';
   styleUrls: ['./tabela.component.css'],
 })
 export class TabelaComponent implements OnInit, AfterViewInit {
-  titulo = 'CARREGANDO...';
   @Output() pageChange = new EventEmitter();
+  titulo = 'CARREGANDO...';
+  usuario!: Registro<Usuario>;
   colunas: string[] = ['ver', 'nome', 'excluir'];
-  dataSource = new MatTableDataSource<Lista>([]);
+  dataSource = new MatTableDataSource<Registro<ListaFire>>([]);
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private service: ListaService) {}
+  constructor(private firebase: FirebaseService) {}
   ngOnInit() {
-    if (!this.service.listas.length) {
-      this.service.carregarListas().subscribe({
-        next: (res) => {
-          this.service.listas = res;
-          this.dataSource.data = res;
-          this.titulo = this.dataSource.data.length
-            ? 'LISTAS ATUAIS'
-            : 'NÃO HÁ NENHUMA LISTA';
-        },
-        error: (error) => {
-          this.titulo = 'ERRO NO CARREGAMENTO DA LISTA';
-          console.log(error);
-        },
-      });
-    } else {
-      this.dataSource.data = this.service.listas;
-      this.titulo = this.dataSource.data.length
-        ? 'LISTAS ATUAIS'
-        : 'NÃO HÁ NENHUMA LISTA';
-    }
+    this.usuario = this.firebase.usuarioAtual;
+    this.carregarListas();
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
+  async carregarListas() {
+    const listas: Registro<ListaFire>[] = await this.firebase.listar<ListaFire>(
+      this.usuario.data.nome,
+    );
+    this.dataSource.data = listas;
+    this.titulo = this.dataSource.data.length
+      ? 'LISTAS ATUAIS'
+      : 'NÃO HÁ NENHUMA LISTA';
+  }
   criarLista() {
     this.pageChange.emit(3);
   }
-  ver(id: number) {
-    this.service.id = id;
+  acessar(element: Registro<ListaFire>) {
+    this.firebase.listaAtual = element;
     this.pageChange.emit(2);
   }
-  excluir(id: number) {
-    this.service.excluirLista(id);
-    this.dataSource.data = this.service.listas;
-  }
-  menuClick() {
-    this.pageChange.emit(4);
+  async excluir(id: string) {
+    await this.firebase.excluir(this.usuario.data.nome, id);
+    this.carregarListas();
   }
 }

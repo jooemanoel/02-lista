@@ -1,5 +1,5 @@
 <app-cabecalho
-  titulo="Login"
+  [titulo]="registro ? 'Cadastro' : 'Login'"
   (btnClick)="homeClick()"
   (menuClick)="carregarUsuarios()"
 ></app-cabecalho>
@@ -21,58 +21,47 @@
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
+      <mat-form-field class="w-100" *ngIf="registro">
+        <mat-label>Confirmar senha</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          [(ngModel)]="senha2"
+        />
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
     </mat-card-content>
-    <mat-card-actions class="gap-1">
+    <mat-card-actions class="p-3 gap-3">
       <button
         class="w-100"
         mat-raised-button
         color="primary"
         (click)="login()"
-        [disabled]="!usuario"
+        [disabled]="!usuario.nome"
+        *ngIf="!registro"
       >
-        Login
+        LOGIN
+      </button>
+      <button
+        class="w-100"
+        mat-raised-button
+        [color]="registro ? 'primary' : 'accent'"
+        (click)="adicionar()"
+        [disabled]="registro && !usuario.nome"
+      >
+        CADASTRAR
       </button>
       <button
         class="w-100"
         mat-raised-button
         color="accent"
-        (click)="adicionar()"
-        [disabled]="!usuario"
+        (click)="registro = !registro"
+        *ngIf="registro"
       >
-        {{ id ? "Editar" : "Registrar" }}
+        CANCELAR
       </button>
     </mat-card-actions>
   </mat-card>
-</div>
-<div class="container pt-3">
-  <table mat-table [dataSource]="dataSource">
-    <ng-container [matColumnDef]="colunas[0]">
-      <th mat-header-cell *matHeaderCellDef style="width: 40px"></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="ativarEdicao(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <ng-container [matColumnDef]="colunas[1]">
-      <th mat-header-cell *matHeaderCellDef>
-        <div class="w-100 text-center">
-          {{ colunas[1].toUpperCase() }}
-        </div>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <div class="w-100 text-center">{{ element.nome }}</div>
-      </td>
-    </ng-container>
-    <ng-container [matColumnDef]="colunas[2]">
-      <th mat-header-cell *matHeaderCellDef style="width: 40px"></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="excluir(element.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
-    <tr mat-row *matRowDef="let row; columns: colunas"></tr>
-  </table>
 </div>

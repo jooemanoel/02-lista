@@ -1,14 +1,14 @@
 <app-cabecalho
   titulo="Minhas listas"
   (btnClick)="criarLista()"
-  (menuClick)="menuClick()"
+  (menuClick)="pageChange.emit(4)"
 ></app-cabecalho>
 <div class="container pt-3">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container [matColumnDef]="colunas[0]">
       <th mat-header-cell *matHeaderCellDef style="width: 40px"></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="ver(element.id)">
+        <button mat-icon-button (click)="acessar(element)">
           <mat-icon>remove_red_eye</mat-icon>
         </button>
       </td>
@@ -20,7 +20,7 @@
         </div>
       </th>
       <td mat-cell *matCellDef="let element">
-        <div class="w-100 text-center">{{ element.nome }}</div>
+        <div class="w-100 text-center">{{ element.data.nome }}</div>
       </td>
     </ng-container>
     <ng-container [matColumnDef]="colunas[2]">
@@ -34,4 +34,7 @@
     <tr mat-header-row *matHeaderRowDef="colunas"></tr>
     <tr mat-row *matRowDef="let row; columns: colunas"></tr>
   </table>
+</div>
+<div class="container text-center pt-3" *ngIf="!dataSource.data.length">
+  Crie uma lista pressionando + no canto superior esquerdo.
 </div>
